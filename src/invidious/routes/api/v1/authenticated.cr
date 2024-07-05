@@ -11,6 +11,12 @@ module Invidious::Routes::API::V1::Authenticated
   #   create_notification_stream(env, topics, connection_channel)
   # end
 
+  def self.get_user(env)
+    env.response.content_type = "application/json"
+    user = env.get("user").as(User)
+    user.to_json
+  end
+
   def self.get_preferences(env)
     env.response.content_type = "application/json"
     user = env.get("user").as(User)

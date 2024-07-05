@@ -1,7 +1,9 @@
 require "db"
+require "json"
 
 struct Invidious::User
   include DB::Serializable
+  include JSON::Serializable
 
   property updated : Time
   property notifications : Array(String)
