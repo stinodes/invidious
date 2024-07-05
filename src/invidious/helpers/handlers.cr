@@ -86,7 +86,7 @@ class FilteredCompressHandler < Kemal::Handler
 end
 
 class AuthHandler < Kemal::Handler
-  {% for method in %w(GET POST PUT HEAD DELETE PATCH OPTIONS) %}
+  {% for method in %w(GET POST PUT HEAD DELETE PATCH) %}
     only ["/api/v1/auth/*"], {{method}}
   {% end %}
 
@@ -142,7 +142,10 @@ class APIHandler < Kemal::Handler
   exclude ["/api/v1/auth/notifications"], "POST"
 
   def call(env)
+    LOGGER.info("HANDLER")
     env.response.headers["Access-Control-Allow-Origin"] = "*" if only_match?(env)
+    env.response.headers["Access-Control-Allow-Headers"] = "*" if only_match?(env)
+    env.response.headers["Access-Control-Allow-Methods"] = "*" if only_match?(env)
     call_next env
   end
 end
